@@ -5,9 +5,10 @@
  */
 package qboiler.codejam.y2014.r1a.p1;
 
+import java.io.File;
 import java.io.IOException;
-import junit.framework.Assert;
-import qboiler.codejam.y2014.r1a.p1.ProblemA;
+
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -17,7 +18,6 @@ import org.junit.Test;
  */
 public class ProblemATest {
 
-    String directory = "/Users/bryce/projects/proto/gcodejam/comps/y2014/r1a/p1/src/test/inputs/";
     public ProblemATest() {
     }
 
@@ -38,10 +38,13 @@ public class ProblemATest {
         executeTest("A-large-practice");
     }
     
-    private void executeTest(String inputFile) throws IOException {
-        String caseBaseName = inputFile;
+    private void executeTest(final String caseBaseName) throws IOException {
+        String directory = "./src/test/inputs/";
+
+        File f = new File(directory);
+
         System.out.println("Execute: " + caseBaseName);
-        System.out.println("Looking in:  " + directory);
+        System.out.println("Looking in:  " + f.getCanonicalPath());
         String fileName = directory +caseBaseName;
         ProblemA instance = new ProblemA();
         instance.process(fileName);
