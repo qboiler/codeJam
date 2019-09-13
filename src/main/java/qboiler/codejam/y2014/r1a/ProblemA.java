@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package qboiler.codejam.y2014.r1a.p1;
+package qboiler.codejam.y2014.r1a;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -34,7 +34,7 @@ public class ProblemA extends CodeJamBase {
         return new PCase(caseNumber, devices, switches, devicesArray, currentFlows);
 
     }
-    static int[] masks;// = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512};
+    private static int[] masks;// = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512};
     static {
         masks = new int[40];
         masks[0]=1;
@@ -43,7 +43,7 @@ public class ProblemA extends CodeJamBase {
         }
     }
 
-    public static int getInt(String s) {
+    static int getInt(String s) {
         int i = 0;
         char[] chars = s.toCharArray();
         for (int j = 0; j < chars.length; ++j) {
@@ -54,36 +54,37 @@ public class ProblemA extends CodeJamBase {
         return i;
     }
 
-    static TreeSet<Integer> getSet(String[] i) {
+    private static TreeSet<Integer> getSet(String[] i) {
         TreeSet<Integer> s = new TreeSet<>();
-        for (int j = 0; j < i.length; ++j) {
-            s.add(getInt(i[j]));
+        for (String value : i) {
+            s.add(getInt(value));
         }
         return s;
     }
 
-    static int maskString(String s, int[] mask) {
+    private static int maskString(String s, int[] mask) {
         int in = getInt(s);
-        for (int i = 0; i < mask.length; ++i) {
-            in = in ^ mask[i];
+        for (int value : mask) {
+            in = in ^ value;
         }
         return in;
     }
 
-    static TreeSet<Integer> getSet(String[] i, int[] masks) {
+    private static TreeSet<Integer> getSet(String[] i, int[] masks) {
         TreeSet<Integer> s = new TreeSet<>();
-        for (int j = 0; j < i.length; ++j) {
-            s.add(maskString(i[j], masks));
+        for (String value : i) {
+            s.add(maskString(value, masks));
         }
         return s;
     }
 
-    static int[] getMasks(String required, String change) {
+    private static int[] getMasks(String required, String change) {
         char[] r = required.toCharArray();
         char[] c = change.toCharArray();
         int[] maskee = new int[r.length];
         int switches = 0;
         for (int i = 0; i < r.length; ++i) {
+            //noinspection StatementWithEmptyBody
             if (r[r.length - 1 - i] == c[r.length - 1 - i]) {
                 //maskee[i]=0;
             } else {
@@ -120,17 +121,18 @@ public class ProblemA extends CodeJamBase {
             String firstRecord = devicesArray[0];
             TreeSet<Integer> deviceInputs = getSet(devicesArray);
             int minLength = Integer.MAX_VALUE;
-            for(int i=0;i<currentFlows.length;++i){
-                int[] maskTest = getMasks(firstRecord, currentFlows[i]);
+            for (String currentFlow : currentFlows) {
+                int[] maskTest = getMasks(firstRecord, currentFlow);
                 int sReq = maskTest.length;
                 TreeSet<Integer> maskedSet = getSet(currentFlows, maskTest);
                 boolean rs = true;
                 for (Integer integer : deviceInputs) {
-                    if(integer.intValue() != maskedSet.pollFirst()){
+                    //noinspection ConstantConditions
+                    if (integer.intValue() != maskedSet.pollFirst()) {
                         rs = false;
                     }
                 }
-                if(rs  && sReq < minLength){
+                if (rs && sReq < minLength) {
                     minLength = sReq;
                 }
             }

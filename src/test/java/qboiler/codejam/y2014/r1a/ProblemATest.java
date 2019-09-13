@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package qboiler.codejam.y2014.r1a.p1;
+package qboiler.codejam.y2014.r1a;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,6 +11,7 @@ import java.io.IOException;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
+import qboiler.codejam.y2014.r1a.ProblemA;
 
 /**
  *
