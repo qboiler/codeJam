@@ -164,7 +164,7 @@ public class ProblemC extends CodeJamBase {
         }
 
         @Override
-        protected Case processCase() {
+        public Case processCase() {
             
             LinkedList<Integer> answer = new LinkedList<>();
             int totalCouples = 0;

@@ -3,17 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.brycealcock.codejam.y2014.qr;
+package qboiler.codejam.y2014.qr;
 
-import com.brycealcock.codejam.Case;
-import java.io.BufferedReader;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import org.junit.Ignore;
 
 /**
  *

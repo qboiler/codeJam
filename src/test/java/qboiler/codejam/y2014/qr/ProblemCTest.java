@@ -4,9 +4,8 @@
  * and open the template in the editor.
  */
 
-package com.brycealcock.codejam.y2014.qr;
+package qboiler.codejam.y2014.qr;
 
-import com.brycealcock.codejam.Case;
 import java.io.BufferedReader;
 import org.junit.After;
 import org.junit.AfterClass;

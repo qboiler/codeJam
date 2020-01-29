@@ -90,7 +90,7 @@ public class ProblemA extends CodeJamBase {
         }
 
         @Override
-        protected Case processCase() {
+        public Case processCase() {
             
             return this;
         }

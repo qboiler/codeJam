@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.brycealcock.codejam.y2014.qr;
+package qboiler.codejam.y2014.qr;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
