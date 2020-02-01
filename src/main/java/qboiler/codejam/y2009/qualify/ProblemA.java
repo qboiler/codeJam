@@ -13,7 +13,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -22,28 +21,24 @@ import java.util.List;
  */
 class ProblemA extends CodeJamBase {
 
-    private ArrayList<String> dictionary = new ArrayList<>();
+    private static ArrayList<String> dictionary = new ArrayList<>();
+    private static int L;
 
-
+    @Override
     public List<Case> readInput(String fileName) throws FileNotFoundException, IOException {
         FileReader reader = new FileReader(fileName + ".in");
         BufferedReader br = new BufferedReader(reader);
 
-        //HashMap<String,String> dictionary = new HashMap<>();
-        String ldn = br.readLine();
-        String[] ldnArray =  ldn.split(" ");
-        int l = Integer.parseInt(ldnArray[0]);
-        int d = Integer.parseInt(ldnArray[1]);
-        int cases = Integer.parseInt(ldnArray[2]);
+        String[] ldnString = br.readLine().split(" ");
+        ProblemA.L = Integer.parseInt(ldnString[0]);
+        int D = Integer.parseInt(ldnString[1]);
+        int N = Integer.parseInt(ldnString[2]);
 
-        for(int i =0;i<d;++i){
-
-            String word = br.readLine();
-            System.out.println(i+" : "+word);
-
-            dictionary.add(word);
+        for(int i = 0; i<D;++i){
+            dictionary.add(br.readLine().trim());
         }
 
+        int cases = N;
         List<Case> result = new ArrayList<>();
         for (int i = 0; i < cases; ++i) {
             result.add(((PCase)readAndProcessCase(i+1, br)).processCase());
@@ -53,21 +48,38 @@ class ProblemA extends CodeJamBase {
 
     @Override
     protected Case readAndProcessCase(int caseNumber, BufferedReader br) throws IOException, NumberFormatException {
-
-        return new PCase(caseNumber, dictionary, br.readLine());
+        String wordCombo = br.readLine();
+        return new PCase(caseNumber,wordCombo);
 
     }
 
     static class PCase extends Case {
-        ArrayList<String> dict;
-        String testString;
-        ArrayList<PChars> combos = new ArrayList<>();
 
-        PCase(int caseNumber, ArrayList<String> pDict, String line) {
+        ArrayList<ArrayList<Character>> combo = new ArrayList<>();
+        PCase(int caseNumber, String wCombo) {
             super(caseNumber);
-            dict = pDict;
-            testString = line;
+
+            for(int i = 0;  i<wCombo.length();++i){
+                char n = wCombo.charAt(i);
+                ArrayList<Character> level = new ArrayList<>();
+                if(n=='('){
+                    n=wCombo.charAt(++i);
+                    while(n!=')'){
+                        level.add(n);
+                        n =wCombo.charAt(++i);
+                    }
+                }else{
+                    level.add(n);
+                }
+                combo.add(level);
+            }
+            if(combo.size()!=L){
+
+                throw new RuntimeException("combo is not L " + combo.size()+" : "+L + ":"+wCombo);
+
+            }
         }
+
         String result;
 
         @Override
@@ -77,66 +89,26 @@ class ProblemA extends CodeJamBase {
 
         @Override
         public Case processCase() {
+            int totalPossibilities = 0;
 
-            for(int i=0, j=0 ;i<testString.length();++i,++j){
-                Character nc = testString.charAt(i);
-                PChars p = new PChars();
-                //PChars allwoed = dict.get(j);
-
-                if(nc.equals('(')){
-                    nc = testString.charAt(++i);
-                    while(!nc.equals(')')){
-
-                        p.add(nc);
-                        nc = testString.charAt(++i);
-                    }
-                }else{
-                        p.add(nc);
-
-                }
-                combos.add(p);
-
-            }
-
-            System.out.println("Test String: " + testString);
-
-            int candidateMatch = 0;
-            for(String nString: dict){
-                boolean didMatch = true;
-                for(int i=0; i<nString.length();++i){
-                    char c = nString.charAt(i);
-                    if(combos.get(i).contains(c)){
-                        continue;
-                    }else{
-                        didMatch=false;
+            for(String s: dictionary){
+                boolean possible = true;
+                System.out.println("Inspecting:"+s+":"+combo.size());
+                for(int i=0;i<s.length();++i){
+                    char n = s.charAt(i);
+                    ArrayList<Character> level = combo.get(i);
+                    if(!level.contains(n)){
+                        possible =false;
                         break;
                     }
                 }
-                if(didMatch){
-                    candidateMatch++;
+                if(possible){
+                    totalPossibilities++;
                 }
             }
-            result = ""+ candidateMatch;
+            result =""+totalPossibilities;
+
             return this;
-        }
-    }
-
-    static class PChars {
-        ArrayList<Character> characters = new ArrayList<>();
-
-        public boolean contains(Character c){
-            return characters.contains(c);
-        }
-        public void add(Character c){
-            characters.add(c);
-        }
-
-        public String toString(){
-            String result = "(";
-            for(Character c: characters){
-                result += c;
-            }
-            return result +")";
         }
     }
 }
