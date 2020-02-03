@@ -19,6 +19,25 @@ import java.util.List;
  */
 abstract public class CodeJamBase {
 
+    public int[] intArrayFromString(String s){
+        String[] sa = s.split(" ");
+        int[] ia = new int[sa.length];
+        for(int i =0;i<sa.length;++i){
+            ia[i] = Integer.parseInt(sa[i]);
+        }
+        return ia;
+
+    }
+    public double[] doubleArrayFromString(String s){
+        String[] sa = s.split(" ");
+        double[] ia = new double[sa.length];
+        for(int i =0;i<sa.length;++i){
+            ia[i] = Double.parseDouble(sa[i]);
+        }
+        return ia;
+
+    }
+
 
     public void process(String fileName) throws IOException {
         output(fileName, readInput(fileName));
